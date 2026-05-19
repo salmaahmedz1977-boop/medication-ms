@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Reports - MedTracker{% endblock %}
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2><i class="bi bi-graph-up"></i> Adherence Reports</h2>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4 mb-3">
+        <div class="card shadow text-center">
+            <div class="card-body">
+                <h3 class="text-primary">{{ "%.1f"|format(adherence_rate) }}%</h3>
+                <p class="text-muted">Today's Adherence Rate</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card shadow text-center">
+            <div class="card-body">
+                <h3 class="text-success">{{ taken_today }}</h3>
+                <p class="text-muted">Doses Taken Today</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card shadow text-center">
+            <div class="card-body">
+                <h3 class="text-danger">{{ missed_today }}</h3>
+                <p class="text-muted">Doses Missed Today</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow">
+    <div class="card-header bg-black">
+        <h5 class="mb-0">Today's Log Summary</h5>
+    </div>
+    <div class="card-body">
+        <div class="progress mb-3" style="height: 30px;">
+            {% if adherence_rate > 0 %}
+            <div class="progress-bar bg-success" style="width: {{ adherence_rate }}%">
+                {{ "%.0f"|format(adherence_rate) }}% Taken
+            </div>
+            {% endif %}
+            {% if adherence_rate < 100 %}
+            <div class="progress-bar bg-danger" style="width: {{ 100 - adherence_rate }}%">
+                {{ "%.0f"|format(100 - adherence_rate) }}% Missed
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
